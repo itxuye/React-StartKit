@@ -32,7 +32,7 @@ class demo1 extends Component {
             return (
               <Picker
                 {...getFieldProps(String(i), {
-                  initialValue: [String(brr[0].value)],
+                  initialValue: ['111'],
                   normalize: this.pickerToString,
                 })}
                 cols={1}
