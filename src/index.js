@@ -8,7 +8,7 @@ import {IntlProvider,} from 'react-intl';
 import CRoutes from './route/index'
 import 'antd-mobile/dist/antd-mobile.css'
 import  configureStore  from './store/index'
-
+import './index.less'
 // global
 import moment from 'moment';
 import lodash from 'lodash';

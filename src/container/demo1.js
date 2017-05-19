@@ -11,14 +11,14 @@ import _ from 'lodash';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 
+let keySet = new Set();
+
 class demo1 extends Component {
   constructor(props) {
     super(props)
+    this.formSubmmitClick = this.normalizeFormValues.bind(this);
   }
 
-  pickerToString(v) {
-    return String(v[0])
-  }
 
   render() {
     let arr = [1, 2, 3, 4];
@@ -28,12 +28,13 @@ class demo1 extends Component {
       <div style={{padding: '20px'}}>
 
         {arr.map((data, i) => {
+          keySet.add(String(i))
           if (data == 1 || data == 2) {
             return (
               <Picker
                 {...getFieldProps(String(i), {
                   initialValue: ['111'],
-                  normalize: this.pickerToString,
+                  // normalize: this.pickerToString,
                 })}
                 cols={1}
                 key={i}
@@ -45,12 +46,25 @@ class demo1 extends Component {
 
         })
         }
-        <Button onClick={() => {
-          this.props.form.validateFields((error, values) => {
-            console.log(values)
-          });
-        }}>Submit</Button>
+        <Button onClick={this.formSubmmitClick}>Submit</Button>
       </div>)
+  }
+
+  formSubmmitClick() {
+    this.props.form.validateFields((error, values) => {
+      console.log(this.normalizeFormValues(values))
+    });
+  }
+
+  normalizeFormValues(v) {
+    let formvalue = _.mapValues(v, function (value, key, object) {
+      if (Array.isArray(value) && keySet.has(key)) {
+        return String(value[value.length - 1])
+      } else {
+        return value
+      }
+    });
+    return formvalue;
   }
 }
 

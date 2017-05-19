@@ -111,6 +111,7 @@
   },
   "dependencies": {
     "antd-mobile": "^1.0.7",
+    "antd-mobile-demo-data": "^0.1.4",
     "axios": "^0.15.3",
     "core-js": "^2.4.1",
     "es6-symbol": "latest",
