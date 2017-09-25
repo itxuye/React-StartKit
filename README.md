@@ -1,14 +1,14 @@
-antd-mobile复现demo用
+复现demo用
 
 ### install
 ```
-yarn or npm install
+npm install
 ```
 ### run dev
 ```
-yarn or npm start
+npm start
 ```
 ### build
 ```
-yarn or npm build
+npm build
 ```

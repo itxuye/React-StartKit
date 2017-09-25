@@ -6,65 +6,37 @@ import React, {Component, PropTypes} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {Toast, Grid, WhiteSpace, InputItem, List, TextareaItem, DatePicker, Button, Picker} from 'antd-mobile';
-import {createForm} from 'rc-form';
-import _ from 'lodash';
-import moment from 'moment';
-import 'moment/locale/zh-cn';
 
 let keySet = new Set();
 
 class demo1 extends Component {
   constructor(props) {
     super(props)
-    this.formSubmmitClick = this.normalizeFormValues.bind(this);
+    this.formSubmmitClick = this.formSubmmitClick.bind(this);
   }
 
 
   render() {
-    let arr = [1, 2, 3, 4];
-    let brr = [{label: '111', value: '111'}, {label: '222', value: '222'}, {label: '333', value: '333'}]
-    const {getFieldProps} = this.props.form;
     return (
       <div style={{padding: '20px'}}>
-
-        {arr.map((data, i) => {
-          keySet.add(String(i))
-          if (data == 1 || data == 2) {
-            return (
-              <Picker
-                {...getFieldProps(String(i), {
-                  initialValue: ['111'],
-                  // normalize: this.pickerToString,
-                })}
-                cols={1}
-                key={i}
-                data={brr}>
-                <List.Item arrow="horizontal">{data}</List.Item>
-              </Picker>
-            )
-          }
-
-        })
-        }
-        <Button onClick={this.formSubmmitClick}>Submit</Button>
+        <Button onClick={this.formSubmmitClick}>兜兜扫一扫测试</Button>
       </div>)
   }
 
   formSubmmitClick() {
-    this.props.form.validateFields((error, values) => {
-      console.log(this.normalizeFormValues(values))
-    });
-  }
-
-  normalizeFormValues(v) {
-    let formvalue = _.mapValues(v, function (value, key, object) {
-      if (Array.isArray(value) && keySet.has(key)) {
-        return String(value[value.length - 1])
-      } else {
-        return value
-      }
-    });
-    return formvalue;
+    Toast.show('兜兜扫一扫', 2)
+    if (window.doudou) {
+      doudou.scanQRCode({
+        success: (res) => {
+          if (res.code === 0) {
+            Toast.show('扫码结果：' + res, 10);
+          } else {
+            // res.code非0时，表示是异常情况
+            Toast.show('扫码结果：' + res, 10);
+          }
+        }
+      });
+    }
   }
 }
 
@@ -75,4 +47,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, null)(createForm()(demo1));
+export default connect(mapStateToProps, null)(demo1);

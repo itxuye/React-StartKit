@@ -5,7 +5,6 @@
 import React, {Component, PropTypes} from 'react';
 import {Route, HashRouter, Control, BrowserRouter, MemoryRouter} from 'react-keeper';
 import demo1 from '../container/demo1.js'
-import demo4 from '../container/demo4.js'
 
 const RouteIndex = (props) => {
   return (
@@ -26,9 +25,9 @@ class CRoutes extends React.Component {
     return (
       <HashRouter>
         <div>
-          <Route path='/' component={RouteIndex}/>
-          {/*<Route index miss path='test' component={demo1}/>*/}
-          <Route index miss path='test' component={demo4}/>
+          <Route path='/' component={RouteIndex}>
+            <Route index miss path='demo1' component={demo1}/>
+          </Route>
         </div>
       </HashRouter>
     )
